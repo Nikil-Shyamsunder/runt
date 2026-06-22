@@ -54,7 +54,7 @@ pub struct Opts {
     #[argh(option, short = 'j', long = "jobs")]
     pub jobs_limit: Option<usize>,
 
-    /// maximum number of features that can be created for concurrent processing.
+    /// maximum number of futures that can be created for concurrent processing.
     /// Use a lower number if runt gives the "too many file handles" error.
     /// Defaults to 50.
     #[argh(option, long = "max-futures")]
