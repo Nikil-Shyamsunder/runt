@@ -2,7 +2,7 @@
 
 Runt is a lightweight, concurrent, and parallel snapshot testing framework
 that requires minimal configuration.
-Checkout the [documentation][docs] for explanation of various features.
+Check out the [documentation][docs] for explanation of various features.
 
 Here is an example of `runt` in action:
 ![](static/runt.gif)
