@@ -15,6 +15,8 @@ pub struct Config {
     pub cmd: String,
     /// Optional directory to store the generated .expect files.
     pub expect_dir: Option<PathBuf>,
+    /// Optional filename to store the generated .expect file under.
+    pub expect_name: Option<String>,
     /// Optional timeout for the tests specified in seconds.
     /// Defaults to 1200 seconds.
     pub timeout: Duration,

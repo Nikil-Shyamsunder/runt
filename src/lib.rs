@@ -29,6 +29,8 @@
 //! cmd = "cat {}"
 //! # (Optional) Directory to store the generated .expect files.
 //! expect_dir = "cat-out/"
+//! # (Optional) Filename to use for the generated .expect file.
+//! expect_name = "cat.expect"
 //! # (Optional) Timeout for tests in seconds. Defaults to 1200 seconds.
 //! timeout = 120
 //! ```
@@ -96,6 +98,9 @@
 //! a command.
 //! The `expect_dir` option specifies the directory which contains the `.expect`
 //! file (defaults to the directory containing the test path).
+//! The `expect_name` option specifies the `.expect` filename inside that
+//! directory (defaults to the test path's filename with the extension changed to
+//! `.expect`).
 //! For example, we can view the `.expect` files for the "Cat tests" suite
 //! under `cat-out`.
 //!

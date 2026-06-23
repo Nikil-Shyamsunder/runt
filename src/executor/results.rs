@@ -46,6 +46,19 @@ impl Test {
             State::Skip | State::Correct | State::Timeout => Ok(()),
             State::Missing(expect) | State::Mismatch(expect, _) => {
                 self.saved = true;
+                if let Some(parent) = self
+                    .expect_path
+                    .parent()
+                    .filter(|path| !path.as_os_str().is_empty())
+                {
+                    fs::create_dir_all(parent).await.map_err(|err| {
+                        RuntError(format!(
+                            "{}: {}.",
+                            parent.to_str().unwrap(),
+                            err
+                        ))
+                    })?;
+                }
                 fs::write(&self.expect_path, expect).await.map_err(|err| {
                     RuntError(format!(
                         "{}: {}.",

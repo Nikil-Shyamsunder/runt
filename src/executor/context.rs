@@ -159,6 +159,7 @@ impl Context {
                 path,
                 cmd: config.cmd.clone(),
                 expect_dir: config.expect_dir.clone(),
+                expect_name: config.expect_name.clone(),
                 test_suite: idx as u64,
                 timeout: config.timeout,
             }));
@@ -215,7 +216,7 @@ impl Context {
             Some(cli::OnlyOpt::Fail) => Ok((st.fail + st.timeout) as i32),
             Some(cli::OnlyOpt::Missing) => Ok((st.miss) as i32),
             Some(cli::OnlyOpt::Pass) => Ok(0),
-            None => Ok((st.fail + st.timeout + st.miss) as i32)
+            None => Ok((st.fail + st.timeout + st.miss) as i32),
         }
     }
 }

@@ -30,6 +30,8 @@ pub struct SuiteConfig {
     pub cmd: String,
     /// Optional directory to store the generated .expect files.
     pub expect_dir: Option<PathBuf>,
+    /// Optional filename to store the generated .expect file under.
+    pub expect_name: Option<String>,
     /// Optional timeout
     pub timeout: Option<u64>,
 }
@@ -55,6 +57,21 @@ impl Config {
                 err
             ))
         })?;
+
+        for suite in &conf.tests {
+            if let Some(expect_name) = &suite.expect_name {
+                if Path::new(expect_name)
+                    .file_name()
+                    .and_then(|name| name.to_str())
+                    != Some(expect_name)
+                {
+                    return Err(errors::RuntError(format!(
+                        "{}: expect_name must be a filename, not a path",
+                        suite.name
+                    )));
+                }
+            }
+        }
 
         // Check if the current `runt` matches the version specified in
         // the configuration.
@@ -88,6 +105,7 @@ impl From<SuiteConfig> for suite::Suite {
                 name: conf.name,
                 cmd: conf.cmd,
                 expect_dir: conf.expect_dir,
+                expect_name: conf.expect_name,
                 timeout: Duration::from_secs(conf.timeout.unwrap_or(1200)),
             },
         }

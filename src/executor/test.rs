@@ -12,6 +12,10 @@ pub struct Test {
     /// Directory to save/check the expect results for.
     /// If set to `None`, defaults to the directory containing `Path`.
     pub expect_dir: Option<PathBuf>,
+    /// Filename to save/check the expect result under.
+    /// If set to `None`, defaults to the input filename with an `.expect`
+    /// extension.
+    pub expect_name: Option<String>,
     /// Test suite with which this Test is associated.
     /// The mapping from the test suite
     pub test_suite: suite::Id,
@@ -62,12 +66,20 @@ impl Test {
 
     /// Path of the expect file.
     pub fn expect_file(&self) -> PathBuf {
+        if let Some(expect_name) = &self.expect_name {
+            return self
+                .expect_dir
+                .clone()
+                .unwrap_or_else(|| self.path.parent().unwrap().to_path_buf())
+                .join(expect_name);
+        }
+
         self.get_base().with_extension("expect")
     }
 
     /// Path of the skip file
     pub fn skip_file(&self) -> PathBuf {
-        self.get_base().with_extension("skip")
+        self.expect_file().with_extension("skip")
     }
 
     /// Construct a command to run by replacing all occurances of `{}` with that
